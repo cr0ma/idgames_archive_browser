@@ -13,7 +13,7 @@ Learn flutter. In particular, the API calls and the UI. If you have any suggesti
 
 # How can I generate a mirror of /idgames?
 
-With ftpgrab (or maybe another application), do this config:
+With [ftpgrab](https://crazymax.dev/ftpgrab/) (or maybe another application), do this config:
 
 ```
 db:
