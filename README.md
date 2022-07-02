@@ -37,6 +37,15 @@ download:
   createBaseDir: true
 ```
 
+And wait a couple of hours, the archive is approximately about 17,8 in GB.
+
+
+You can also sync it with this silly batch call:
+
+```
+.\ftpgrab.exe --config .\config.yml
+```
+
 And maybe modify the win32 calls in the app to reflect your preferences.
 
 # This app is utter garbage
