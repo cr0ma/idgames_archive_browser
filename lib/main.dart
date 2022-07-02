@@ -1,5 +1,3 @@
-// import 'package:doom_archive_browser/views/search_view.dart';
-// import 'package:doom_archive_browser/widgets/entry_widget.dart';
 import 'dart:ffi';
 
 import 'package:filesize/filesize.dart';
@@ -10,7 +8,6 @@ import 'package:idgames_archive_browser/service/api.dart';
 import 'package:win32/win32.dart';
 
 import 'model/archive_model.dart';
-// import 'package:provider/provider.dart';
 
 void main() {
   runApp(App());
@@ -37,9 +34,6 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return FluentApp(
         debugShowCheckedModeBanner: false,
-        /**
-         * TODO: Theme the App
-         */
         home: NavigationView(
           pane: NavigationPane(
             selected: currentView,
@@ -72,7 +66,6 @@ class _AppState extends State<App> {
                               });
                             }
                           },
-                          // controller: _controller,
                           decoration: mat.InputDecoration(
                             filled: true,
                             fillColor: const Color(0xFFFFFFFF),
@@ -128,7 +121,6 @@ class _AppState extends State<App> {
                             shrinkWrap: true,
                             itemCount: snapshot.data!.content.file.length,
                             itemBuilder: (context, index) {
-                              // List<Contents> contents = snapshot.data?[index];
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Card(
@@ -295,7 +287,6 @@ class _AppState extends State<App> {
                                                       ShellExecute(
                                                           0,
                                                           TEXT('open'),
-                                                          // TODO: Make the user pick the sourceport
                                                           TEXT('notepad.exe'),
                                                           TEXT(
                                                               "C:/Giochi/DOOM/mirror/pc/games/idgames/${snapshot.data!.content.file[index].dir}/${snapshot.data!.content.file[index].filename.replaceAll(RegExp('zip'), 'txt')}"),
@@ -305,8 +296,8 @@ class _AppState extends State<App> {
                                                     icon: Text(
                                                       "Read textfile",
                                                       style: TextStyle(
-                                                        fontWeight: FontWeight
-                                                            .bold, /* color: Colors.green */
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                       ),
                                                       textScaleFactor: 2,
                                                     ),
@@ -336,8 +327,8 @@ class _AppState extends State<App> {
                                                     icon: Text(
                                                       "Play",
                                                       style: TextStyle(
-                                                        fontWeight: FontWeight
-                                                            .bold, /* color: Colors.green */
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                       ),
                                                       textScaleFactor: 2,
                                                     ),
