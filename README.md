@@ -1,7 +1,7 @@
 # IDgames Archive Browser
 
 A Flutter application that can search the idgames API and display data about levels.
-With a local mirror (at the moment not automatically generated) of files, can also view textfile, and play it with (at the moment hardcoded)gzdoom.exe.
+With a local mirror (at the moment not automatically generated) of files, can also view textfile, and play it with (at the moment hardcoded) gzdoom.exe.
 
 # Purpose
 
