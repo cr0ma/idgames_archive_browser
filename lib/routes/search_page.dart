@@ -30,57 +30,61 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        Container(
-          child: mat.Material(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: mat.TextField(
-                onSubmitted: (text) async {
-                  if (text.length >= 5) {
-                    setState(() {
-                      query = text;
-                    });
-                  }
-                },
-                decoration: mat.InputDecoration(
-                  filled: true,
-                  fillColor: const Color(0xFFFFFFFF),
-                  isDense: true,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  /* -- Text and Icon -- */
-                  hintText: "Search for pwads...",
-                  hintStyle: const TextStyle(
-                    fontSize: 18,
-                    color: Color(0xFFB3B1B1),
-                  ), // TextStyle
-                  suffixIcon: const Icon(
-                    mat.Icons.search,
-                    size: 26,
-                    color: mat.Colors.black54,
-                  ), // Icon
-                  /* -- Border Styling -- */
-                  border: mat.OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(45.0),
-                    borderSide: const BorderSide(
-                      width: 2.0,
-                      color: Color(0xFFFF0000),
-                    ), // BorderSide
-                  ), // mat.OutlineInputBorder
-                  enabledBorder: mat.OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(45.0),
-                    borderSide: const BorderSide(
-                      width: 2.0,
-                      color: mat.Colors.grey,
-                    ), // BorderSide
-                  ), // mat.OutlineInputBorder
-                  focusedBorder: mat.OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(45.0),
-                    borderSide: const BorderSide(
-                      width: 2.0,
-                      color: mat.Colors.grey,
-                    ), // BorderSide
-                  ), // mat.OutlineInputBorder
-                ), // InputDecoration
+        Card(
+          elevation: 1.5,
+          child: Container(
+            child: mat.Material(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: mat.TextField(
+                  onSubmitted: (text) async {
+                    if (text.length >= 5) {
+                      setState(() {
+                        query = text;
+                      });
+                    }
+                  },
+                  decoration: mat.InputDecoration(
+                    filled: true,
+                    fillColor: const Color(0xFFFFFFFF),
+                    isDense: true,
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 15.0),
+                    /* -- Text and Icon -- */
+                    hintText: "Search for pwads...",
+                    hintStyle: const TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFFB3B1B1),
+                    ), // TextStyle
+                    suffixIcon: const Icon(
+                      mat.Icons.search,
+                      size: 26,
+                      color: mat.Colors.black54,
+                    ), // Icon
+                    /* -- Border Styling -- */
+                    border: mat.OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(45.0),
+                      borderSide: const BorderSide(
+                        width: 2.0,
+                        color: Color(0xFFFF0000),
+                      ), // BorderSide
+                    ), // mat.OutlineInputBorder
+                    enabledBorder: mat.OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(45.0),
+                      borderSide: const BorderSide(
+                        width: 2.0,
+                        color: mat.Colors.grey,
+                      ), // BorderSide
+                    ), // mat.OutlineInputBorder
+                    focusedBorder: mat.OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(45.0),
+                      borderSide: const BorderSide(
+                        width: 2.0,
+                        color: mat.Colors.grey,
+                      ), // BorderSide
+                    ), // mat.OutlineInputBorder
+                  ), // InputDecoration
+                ),
               ),
             ),
           ),
