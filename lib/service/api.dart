@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:http/http.dart';
 import 'package:idgames_archive_browser/model/archive_model.dart';
+import 'dart:math';
 
 class ApiService {
   String endpoint = "https://www.doomworld.com/idgames/api/api.php?action=";
@@ -25,10 +27,16 @@ class ApiService {
     }
   }
 
-  Stream<Contents> getListEntries(Duration refreshTime, String query) async* {
-    while (true) {
-      await Future.delayed(refreshTime);
-      yield await getListEntry(query);
+  Future<FileElement> getFutureEntry(int? id) async {
+    Response response =
+        await get(Uri.parse(endpoint + 'get&id=${id}' + '&out=json'));
+    if (response.statusCode == 200) {
+      return FileElement.fromJson(json.decode(response.body)["content"]);
+    } else {
+      throw Exception(response.reasonPhrase);
     }
   }
+
+  // https://www.doomworld.com/idgames/api/api.php?action=latestfiles&limit=1&out=json
+
 }
