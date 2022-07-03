@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:ffi';
 import 'dart:math';
 
@@ -6,14 +5,13 @@ import 'package:filesize/filesize.dart';
 
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart' as mat;
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:idgames_archive_browser/service/api.dart';
 import 'package:idgames_archive_browser/service/api_sync.dart';
 import 'package:win32/win32.dart';
 
 import 'package:idgames_archive_browser/model/archive_model.dart';
-
-import 'package:idgames_archive_browser/service/api.dart';
 
 class RandomEntryPage extends StatefulWidget {
   RandomEntryPage({Key? key}) : super(key: key);
@@ -26,19 +24,15 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
   @override
   void initState() {
     super.initState();
-
-    // Future<int> id = ApiServiceUtil().getRandomEntryId();
   }
 
   int random(min, max) {
     return min + Random().nextInt(max - min);
   }
 
-  Future<FileElement> _genEntryRandomId() /* async */ {
+  Future<FileElement> _genEntryRandomId() {
     setState(() {
-      // Future<int> id = ApiServiceUtil().getRandomEntryId();
       ApiServiceUtil().getRandomEntryId();
-      // widget.id = random(1, ApiServiceUtil().randomEntryId);
     });
     return ApiService().getEntry(random(1, ApiServiceUtil().randomEntryId));
   }
@@ -55,7 +49,7 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                 "Get Random pwad",
                 textScaleFactor: 2,
                 style: TextStyle(
-                  fontWeight: FontWeight.bold, /* color: Colors.green */
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               onPressed: () {
@@ -143,15 +137,25 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Text(
-                                        "Rating",
+                                        "Rating:",
                                       ),
                                     ),
                                   ),
                                   TableCell(
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
-                                      child: Text(
-                                        snapshot.data!.rating.toString(),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(1.0),
+                                        child: RatingBarIndicator(
+                                          rating: snapshot.data!.rating,
+                                          itemCount: 5,
+                                          itemSize: 15.0,
+                                          physics: BouncingScrollPhysics(),
+                                          itemBuilder: (context, _) => Icon(
+                                            mat.Icons.star,
+                                            color: mat.Colors.amber,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -160,7 +164,7 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                             ],
                           ),
                           SizedBox(
-                            width: 400,
+                            width: 399,
                           ),
                           Row(
                             mainAxisSize: MainAxisSize.min,

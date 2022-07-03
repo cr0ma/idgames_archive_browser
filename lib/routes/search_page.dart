@@ -10,6 +10,8 @@ import 'package:win32/win32.dart';
 
 import 'package:idgames_archive_browser/model/archive_model.dart';
 
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
@@ -179,10 +181,19 @@ class _SearchPageState extends State<SearchPage> {
                                       TableCell(
                                         child: Padding(
                                           padding: const EdgeInsets.all(4.0),
-                                          child: Text(
-                                            snapshot.data!.content.file[index]
-                                                .rating
-                                                .toString(),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(1.0),
+                                            child: RatingBarIndicator(
+                                              rating: snapshot.data!.content
+                                                  .file[index].rating,
+                                              itemCount: 5,
+                                              itemSize: 15.0,
+                                              physics: BouncingScrollPhysics(),
+                                              itemBuilder: (context, _) => Icon(
+                                                mat.Icons.star,
+                                                color: mat.Colors.amber,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
