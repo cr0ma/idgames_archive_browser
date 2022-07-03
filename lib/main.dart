@@ -41,7 +41,7 @@ class _AppState extends State<App> {
                 title: Text("Random"),
               ),
             ],
-            displayMode: PaneDisplayMode.auto,
+            displayMode: PaneDisplayMode.top,
           ),
           appBar: NavigationAppBar(
             actions: Row(children: []),
