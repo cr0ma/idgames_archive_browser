@@ -76,6 +76,9 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                     padding: const EdgeInsets.all(4.0),
                                     child: Text(
                                       snapshot.data!.title,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -92,8 +95,12 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                 TableCell(
                                   child: Padding(
                                     padding: const EdgeInsets.all(4.0),
-                                    child: Text(filesize(
-                                        snapshot.data!.size.toString())),
+                                    child: Text(
+                                      filesize(snapshot.data!.size.toString()),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -110,7 +117,11 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(4.0),
                                     child: Text(
-                                        snapshot.data!.date.toIso8601String()),
+                                      snapshot.data!.date.toIso8601String(),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],

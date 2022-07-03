@@ -128,6 +128,9 @@ class _SearchPageState extends State<SearchPage> {
                                         child: Text(
                                           snapshot
                                               .data!.content.file[index].title,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -144,9 +147,14 @@ class _SearchPageState extends State<SearchPage> {
                                     TableCell(
                                       child: Padding(
                                         padding: const EdgeInsets.all(4.0),
-                                        child: Text(filesize(snapshot
-                                            .data!.content.file[index].size
-                                            .toString())),
+                                        child: Text(
+                                          filesize(snapshot
+                                              .data!.content.file[index].size
+                                              .toString()),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -162,9 +170,14 @@ class _SearchPageState extends State<SearchPage> {
                                     TableCell(
                                       child: Padding(
                                         padding: const EdgeInsets.all(4.0),
-                                        child: Text(snapshot
-                                            .data!.content.file[index].date
-                                            .toIso8601String()),
+                                        child: Text(
+                                          snapshot
+                                              .data!.content.file[index].date
+                                              .toIso8601String(),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],
