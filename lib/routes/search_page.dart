@@ -213,7 +213,7 @@ class _SearchPageState extends State<SearchPage> {
                                   child: new Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
-                                      child: IconButton(
+                                      child: FilledButton(
                                         onPressed: () {
                                           ShellExecute(
                                               NULL,
@@ -224,7 +224,7 @@ class _SearchPageState extends State<SearchPage> {
                                               nullptr,
                                               SW_SHOWNORMAL);
                                         },
-                                        icon: Text(
+                                        child: Text(
                                           "View on /idgames",
                                           style: TextStyle(
                                             fontWeight: FontWeight
@@ -241,7 +241,7 @@ class _SearchPageState extends State<SearchPage> {
                                   child: new Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
-                                      child: IconButton(
+                                      child: FilledButton(
                                         onPressed: () {
                                           ShellExecute(
                                               0,
@@ -252,7 +252,7 @@ class _SearchPageState extends State<SearchPage> {
                                               nullptr,
                                               SW_SHOW);
                                         },
-                                        icon: Text(
+                                        child: Text(
                                           "Read textfile",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
@@ -268,7 +268,7 @@ class _SearchPageState extends State<SearchPage> {
                                   child: new Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
-                                      child: IconButton(
+                                      child: FilledButton(
                                         onPressed: () {
                                           ShellExecute(
                                               0,
@@ -280,7 +280,7 @@ class _SearchPageState extends State<SearchPage> {
                                               nullptr,
                                               SW_SHOW);
                                         },
-                                        icon: Text(
+                                        child: Text(
                                           "Play",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
@@ -301,14 +301,15 @@ class _SearchPageState extends State<SearchPage> {
                 );
               } else if (snapshot.hasError) {
                 return Center(
-                    child: Expanded(
-                        child: Text(
-                  "No results",
-                  textScaleFactor: 2,
-                )));
+                  child: Expanded(
+                    child: Text(
+                      "No results",
+                      textScaleFactor: 2,
+                    ),
+                  ),
+                );
               }
-              return Expanded(
-                  child: Center(child: mat.CircularProgressIndicator()));
+              return Expanded(child: Center(child: ProgressRing()));
             },
             future: ApiService().getListEntry(query),
           ),

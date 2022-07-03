@@ -41,23 +41,6 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: IconButton(
-              icon: Text(
-                "Get Random pwad",
-                textScaleFactor: 2,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () {
-                _genEntryRandomId();
-              },
-            ),
-          ),
-        ),
         FutureBuilder<FileElement>(
             future: _genEntryRandomId(),
             builder: (context, snapshot) {
@@ -175,7 +158,7 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                               child: new Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  child: IconButton(
+                                  child: FilledButton(
                                     onPressed: () {
                                       ShellExecute(
                                           NULL,
@@ -185,7 +168,7 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                           nullptr,
                                           SW_SHOWNORMAL);
                                     },
-                                    icon: Text(
+                                    child: Text(
                                       "View on /idgames",
                                       style: TextStyle(
                                         fontWeight: FontWeight
@@ -202,7 +185,7 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                               child: new Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  child: IconButton(
+                                  child: FilledButton(
                                     onPressed: () {
                                       ShellExecute(
                                           0,
@@ -213,7 +196,7 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                           nullptr,
                                           SW_SHOW);
                                     },
-                                    icon: Text(
+                                    child: Text(
                                       "Read textfile",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -229,7 +212,7 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                               child: new Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  child: IconButton(
+                                  child: FilledButton(
                                     onPressed: () {
                                       ShellExecute(
                                           0,
@@ -241,7 +224,7 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                           nullptr,
                                           SW_SHOW);
                                     },
-                                    icon: Text(
+                                    child: Text(
                                       "Play",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -266,9 +249,25 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                   textScaleFactor: 2,
                 )));
               }
-              return Expanded(
-                  child: Center(child: mat.CircularProgressIndicator()));
+              return Expanded(child: Center(child: ProgressRing()));
             }),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Center(
+            child: FilledButton(
+              child: Text(
+                "Get Random pwad",
+                textScaleFactor: 2,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () {
+                _genEntryRandomId();
+              },
+            ),
+          ),
+        ),
       ],
     );
   }
