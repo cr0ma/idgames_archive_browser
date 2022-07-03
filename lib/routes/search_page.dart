@@ -4,6 +4,7 @@ import 'package:filesize/filesize.dart';
 
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart' as mat;
+import 'package:get_time_ago/get_time_ago.dart';
 
 import 'package:idgames_archive_browser/service/api.dart';
 import 'package:win32/win32.dart';
@@ -181,9 +182,10 @@ class _SearchPageState extends State<SearchPage> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: Text(
-                                            snapshot
-                                                .data!.content.file[index].date
-                                                .toIso8601String(),
+                                            GetTimeAgo.parse(
+                                              snapshot.data!.content.file[index]
+                                                  .date,
+                                            ),
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ),

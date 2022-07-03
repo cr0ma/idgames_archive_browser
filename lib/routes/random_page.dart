@@ -12,6 +12,8 @@ import 'package:idgames_archive_browser/service/api_sync.dart';
 
 import 'package:idgames_archive_browser/model/archive_model.dart';
 
+import 'package:get_time_ago/get_time_ago.dart';
+
 class RandomEntryPage extends StatefulWidget {
   RandomEntryPage({Key? key}) : super(key: key);
   int? id;
@@ -121,7 +123,9 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Text(
-                                        snapshot.data!.date.toIso8601String(),
+                                        GetTimeAgo.parse(
+                                          snapshot.data!.date,
+                                        ),
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
