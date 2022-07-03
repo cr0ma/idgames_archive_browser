@@ -41,6 +41,7 @@ dependencies:
   win32: ^2.7.0
   filesize: ^2.0.1
   flutter_rating_bar: ^4.0.1
+  process_run: ^0.12.3+2
 
 dev_dependencies:
   flutter_test:

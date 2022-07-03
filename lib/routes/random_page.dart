@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:filesize/filesize.dart';
@@ -6,10 +5,11 @@ import 'package:filesize/filesize.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart' as mat;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:idgames_archive_browser/platform/windows_platform_commands.dart';
 
 import 'package:idgames_archive_browser/service/api.dart';
 import 'package:idgames_archive_browser/service/api_sync.dart';
-import 'package:win32/win32.dart';
+// import 'package:process_run/cmd_run.dart';
 
 import 'package:idgames_archive_browser/model/archive_model.dart';
 
@@ -171,13 +171,8 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                 child: Container(
                                   child: FilledButton(
                                     onPressed: () {
-                                      ShellExecute(
-                                          NULL,
-                                          TEXT('open'),
-                                          TEXT(snapshot.data!.url),
-                                          nullptr,
-                                          nullptr,
-                                          SW_SHOWNORMAL);
+                                      WindowsPlatformCommands()
+                                          .runOpenUrl(snapshot.data!.url);
                                     },
                                     child: Text(
                                       "View on /idgames",
@@ -198,14 +193,10 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                 child: Container(
                                   child: FilledButton(
                                     onPressed: () {
-                                      ShellExecute(
-                                          0,
-                                          TEXT('open'),
-                                          TEXT('notepad.exe'),
-                                          TEXT(
-                                              "C:/Giochi/DOOM/mirror/pc/games/idgames/${snapshot.data!.dir}/${snapshot.data!.filename.replaceAll(RegExp('zip'), 'txt')}"),
-                                          nullptr,
-                                          SW_SHOW);
+                                      WindowsPlatformCommands().runNotepadOnTxtfile(
+                                          "C:/Giochi/DOOM/mirror/pc/games/idgames/" +
+                                              snapshot.data!.dir +
+                                              snapshot.data!.filename);
                                     },
                                     child: Text(
                                       "Read textfile",
@@ -225,15 +216,11 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                 child: Container(
                                   child: FilledButton(
                                     onPressed: () {
-                                      ShellExecute(
-                                          0,
-                                          TEXT('open'),
-                                          // TODO: Make the user pick the sourceport
-                                          TEXT('C:/Giochi/DOOM/gzdoom.exe'),
-                                          TEXT(
-                                              "C:/Giochi/DOOM/mirror/pc/games/idgames/${snapshot.data!.dir}/${snapshot.data!.filename}"),
-                                          nullptr,
-                                          SW_SHOW);
+                                      WindowsPlatformCommands().runDoom(
+                                          "C:/Giochi/DOOM/gzdoom.exe",
+                                          "C:/Giochi/DOOM/mirror/pc/games/idgames/" +
+                                              snapshot.data!.dir +
+                                              snapshot.data!.filename);
                                     },
                                     child: Text(
                                       "Play",
