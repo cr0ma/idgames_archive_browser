@@ -7,9 +7,11 @@ With a local mirror (at the moment not automatically generated) of files, can al
 
 Learn flutter. In particular, the API calls and the UI. If you have any suggestion well feel free to suggest so. 
 
-# Screenshot
+# Screenshots
 
-![Search](https://i.imgur.com/wn29iYs.jpeg)
+![Search](./screenshots/search_page.png)
+![Random](./screenshots/random_page.png)
+
 
 # How can I generate a mirror of /idgames?
 

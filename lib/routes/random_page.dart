@@ -190,7 +190,6 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                         fontWeight: FontWeight
                                             .bold, /* color: Colors.green */
                                       ),
-                                      textScaleFactor: 1.2,
                                     ),
                                   ),
                                   CommandBarButton(
@@ -209,7 +208,6 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      textScaleFactor: 1.2,
                                     ),
                                   ),
                                   CommandBarButton(
@@ -228,7 +226,6 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      textScaleFactor: 1.2,
                                     ),
                                   ),
                                 ],

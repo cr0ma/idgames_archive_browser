@@ -253,7 +253,6 @@ class _SearchPageState extends State<SearchPage> {
                                             fontWeight: FontWeight
                                                 .bold, /* color: Colors.green */
                                           ),
-                                          textScaleFactor: 1.2,
                                         ),
                                       ),
                                       CommandBarButton(
@@ -278,7 +277,6 @@ class _SearchPageState extends State<SearchPage> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
-                                          textScaleFactor: 1.2,
                                         ),
                                       ),
                                       CommandBarButton(
@@ -299,7 +297,6 @@ class _SearchPageState extends State<SearchPage> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
-                                          textScaleFactor: 1.2,
                                         ),
                                       ),
                                     ],
