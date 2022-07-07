@@ -13,6 +13,7 @@ import 'package:idgames_archive_browser/service/api_sync.dart';
 import 'package:idgames_archive_browser/model/archive_model.dart';
 
 import 'package:get_time_ago/get_time_ago.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RandomEntryPage extends StatefulWidget {
   RandomEntryPage({Key? key}) : super(key: key);
@@ -22,9 +23,11 @@ class RandomEntryPage extends StatefulWidget {
 }
 
 class _RandomEntryPageState extends State<RandomEntryPage> {
+  late Future<SharedPreferences> prefs;
   @override
   void initState() {
     super.initState();
+    prefs = SharedPreferences.getInstance();
   }
 
   int random(min, max) {
@@ -192,6 +195,7 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                       ),
                                     ),
                                   ),
+                                  CommandBarSeparator(),
                                   CommandBarButton(
                                     onPressed: () {
                                       WindowsPlatformCommands().runNotepadOnTxtfile(
@@ -210,13 +214,25 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                       ),
                                     ),
                                   ),
+                                  CommandBarSeparator(),
                                   CommandBarButton(
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      var idGamesMirrorPath = await prefs.then(
+                                          (c) =>
+                                              c.getString("idGamesMirrorPath"));
+                                      var sourcePortPath = await prefs.then(
+                                          (c) => c.getString("sourcePortPath"));
+
+                                      var dir = snapshot.data!.dir;
+
+                                      var filename = snapshot.data!.filename;
+
+                                      var argsString =
+                                          '${Uri.file(idGamesMirrorPath!, windows: true).toFilePath(windows: false).substring(1)}/${dir}${filename}';
+
                                       WindowsPlatformCommands().runDoom(
-                                          "C:/Giochi/DOOM/gzdoom.exe",
-                                          "C:/Giochi/DOOM/mirror/pc/games/idgames/" +
-                                              snapshot.data!.dir +
-                                              snapshot.data!.filename);
+                                          sourcePortPath!,
+                                          argsString.toString());
                                     },
                                     icon: Tooltip(
                                         message: "Play with a sourceport",

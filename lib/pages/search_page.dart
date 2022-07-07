@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ffi';
 
 import 'package:filesize/filesize.dart';
@@ -5,8 +6,10 @@ import 'package:filesize/filesize.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart' as mat;
 import 'package:get_time_ago/get_time_ago.dart';
+// import 'package:idgames_archive_browser/platform/preferences_platform.dart';
 
 import 'package:idgames_archive_browser/service/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win32/win32.dart';
 
 import 'package:idgames_archive_browser/model/archive_model.dart';
@@ -14,6 +17,7 @@ import 'package:idgames_archive_browser/model/archive_model.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../platform/windows_platform_commands.dart';
+import 'package:path/path.dart' as pat;
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -24,11 +28,18 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   late String query;
+
+  late Future<SharedPreferences> prefs;
   void initState() {
     super.initState();
     query = "";
+    prefs = SharedPreferences.getInstance();
+
+    // prefs = Preferences();
+    // idGamesMirrorPath = Preferences().idGamesMirrorPath;
   }
 
+  String? idGamesMirrorPath;
   @override
   Widget build(BuildContext context) {
     return Acrylic(
@@ -255,13 +266,18 @@ class _SearchPageState extends State<SearchPage> {
                                           ),
                                         ),
                                       ),
+                                      CommandBarSeparator(),
                                       CommandBarButton(
-                                        onPressed: () {
+                                        onPressed: () async {
+                                          var idGamesMirrorPath = await prefs
+                                              .then((c) => c.getString(
+                                                  "idGamesMirrorPath"));
                                           WindowsPlatformCommands()
                                               .runNotepadOnTxtfile(
-                                                  "C:/Giochi/DOOM/mirror/pc/games/idgames/" +
+                                                  idGamesMirrorPath! +
+                                                      "\\" +
                                                       snapshot.data!.content
-                                                          .file[index].url +
+                                                          .file[index].dir +
                                                       snapshot
                                                           .data!
                                                           .content
@@ -279,15 +295,28 @@ class _SearchPageState extends State<SearchPage> {
                                           ),
                                         ),
                                       ),
+                                      CommandBarSeparator(),
                                       CommandBarButton(
-                                        onPressed: () {
+                                        onPressed: () async {
+                                          var idGamesMirrorPath = await prefs
+                                              .then((c) => c.getString(
+                                                  "idGamesMirrorPath"));
+                                          var sourcePortPath = await prefs.then(
+                                              (c) => c
+                                                  .getString("sourcePortPath"));
+
+                                          var dir = snapshot
+                                              .data!.content.file[index].dir;
+
+                                          var filename = snapshot.data!.content
+                                              .file[index].filename;
+
+                                          var argsString =
+                                              '${Uri.file(idGamesMirrorPath!, windows: true).toFilePath(windows: false).substring(1)}/${dir}${filename}';
+                                          log(argsString.toString());
                                           WindowsPlatformCommands().runDoom(
-                                              "C:/Giochi/DOOM/gzdoom.exe",
-                                              "C:/Giochi/DOOM/mirror/pc/games/idgames/" +
-                                                  snapshot.data!.content
-                                                      .file[index].dir +
-                                                  snapshot.data!.content
-                                                      .file[index].filename);
+                                              sourcePortPath!,
+                                              argsString.toString());
                                         },
                                         icon: Tooltip(
                                             message: "Play with a sourceport",

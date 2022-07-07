@@ -43,6 +43,9 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   process_run: ^0.12.3+2
   get_time_ago: ^1.1.4
+  shared_preferences: ^2.0.15
+  filesystem_picker: ^2.0.1
+  path: ^1.8.1
 
 dev_dependencies:
   flutter_test:

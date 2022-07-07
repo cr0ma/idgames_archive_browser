@@ -1,7 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart' as mat;
-import 'package:idgames_archive_browser/routes/random_page.dart';
-import 'package:idgames_archive_browser/routes/search_page.dart';
+import 'package:idgames_archive_browser/pages/config_page.dart';
+import 'package:idgames_archive_browser/pages/random_page.dart';
+import 'package:idgames_archive_browser/pages/search_page.dart';
 
 void main() {
   runApp(App());
@@ -40,6 +41,10 @@ class _AppState extends State<App> {
                 icon: Icon(mat.Icons.question_mark),
                 title: Text("Random"),
               ),
+              PaneItem(
+                icon: Icon(mat.Icons.settings),
+                title: Text("Config"),
+              ),
             ],
             displayMode: PaneDisplayMode.top,
           ),
@@ -51,6 +56,7 @@ class _AppState extends State<App> {
             children: [
               SearchPage(),
               RandomEntryPage(),
+              ConfigPage(),
             ],
           ),
         ));
