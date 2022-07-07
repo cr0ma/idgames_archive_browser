@@ -144,7 +144,7 @@ class _ConfigPageState extends State<ConfigPage> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "Surceport (gzdoom) path:",
+                                "Sourceport (gzdoom) path:",
                                 style:
                                     TextStyle(fontWeight: mat.FontWeight.bold),
                               ),
