@@ -89,46 +89,6 @@ class _SearchPageState extends State<SearchPage> {
                           );
                         }
                       },
-                      /*  decoration: flu.TextInput(
-                        filled: true,
-                        fillColor: const Color(0xFFFFFFFF),
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        /* -- Text and Icon -- */
-                        hintText: "Search for pwads...",
-                        hintStyle: const TextStyle(
-                          fontSize: 18,
-                          color: Color(0xFFB3B1B1),
-                        ), // TextStyle
-                        suffixIcon: const Icon(
-                          mat.Icons.search,
-                          size: 26,
-                          color: mat.Colors.black54,
-                        ), // Icon
-                        /* -- Border Styling -- */
-                        border: mat.OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(45.0),
-                          borderSide: const BorderSide(
-                            width: 2.0,
-                            color: Color(0xFFFF0000),
-                          ), // BorderSide
-                        ), // mat.OutlineInputBorder
-                        enabledBorder: mat.OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(45.0),
-                          borderSide: const BorderSide(
-                            width: 2.0,
-                            color: mat.Colors.grey,
-                          ), // BorderSide
-                        ), // mat.OutlineInputBorder
-                        focusedBorder: mat.OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(45.0),
-                          borderSide: const BorderSide(
-                            width: 2.0,
-                            color: mat.Colors.grey,
-                          ), // BorderSide
-                        ), // mat.OutlineInputBorder
-                      ), // InputDecoration
-                    */
                     ),
                   ],
                 ),
