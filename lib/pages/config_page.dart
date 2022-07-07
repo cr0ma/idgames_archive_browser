@@ -127,6 +127,7 @@ class _ConfigPageState extends State<ConfigPage> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
+                                  // TODO: Modal to edit by hand?
                                   onPressed: () {},
                                 ),
                               ],
@@ -226,6 +227,7 @@ class _ConfigPageState extends State<ConfigPage> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
+                                        // TODO: Modal to edit by hand?
                                         onPressed: () {},
                                       ),
                                     ],

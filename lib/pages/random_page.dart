@@ -260,6 +260,7 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                     textScaleFactor: 2,
                     style: TextStyle(
                       color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                   )));
                 }

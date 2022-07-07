@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:filesize/filesize.dart';
 
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:fluent_ui/fluent_ui.dart' as flu;
 import 'package:flutter/material.dart' as mat;
 import 'package:get_time_ago/get_time_ago.dart';
 // import 'package:idgames_archive_browser/platform/preferences_platform.dart';
@@ -18,6 +19,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../platform/windows_platform_commands.dart';
 import 'package:path/path.dart' as pat;
+
+import 'package:idgames_archive_browser/platform/windows_platform_commands.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -42,73 +45,171 @@ class _SearchPageState extends State<SearchPage> {
   String? idGamesMirrorPath;
   @override
   Widget build(BuildContext context) {
-    return Acrylic(
-      tint: Colors.black,
-      tintAlpha: 0.1,
-      blurAmount: 0.5,
-      child: ListView(
-        children: [
-          Card(
-            elevation: 1.5,
-            child: Container(
-              child: mat.Material(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: mat.TextField(
-                    onSubmitted: (text) async {
-                      if (text.length >= 5) {
-                        setState(() {
-                          query = text;
-                        });
-                      }
-                    },
-                    decoration: mat.InputDecoration(
-                      filled: true,
-                      fillColor: const Color(0xFFFFFFFF),
-                      isDense: true,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 15.0),
-                      /* -- Text and Icon -- */
-                      hintText: "Search for pwads...",
-                      hintStyle: const TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFFB3B1B1),
-                      ), // TextStyle
-                      suffixIcon: const Icon(
-                        mat.Icons.search,
-                        size: 26,
-                        color: mat.Colors.black54,
-                      ), // Icon
-                      /* -- Border Styling -- */
-                      border: mat.OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(45.0),
-                        borderSide: const BorderSide(
-                          width: 2.0,
-                          color: Color(0xFFFF0000),
-                        ), // BorderSide
-                      ), // mat.OutlineInputBorder
-                      enabledBorder: mat.OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(45.0),
-                        borderSide: const BorderSide(
-                          width: 2.0,
-                          color: mat.Colors.grey,
-                        ), // BorderSide
-                      ), // mat.OutlineInputBorder
-                      focusedBorder: mat.OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(45.0),
-                        borderSide: const BorderSide(
-                          width: 2.0,
-                          color: mat.Colors.grey,
-                        ), // BorderSide
-                      ), // mat.OutlineInputBorder
-                    ), // InputDecoration
-                  ),
+    return flu.ScaffoldPage(
+      padding: EdgeInsets.zero,
+      header: Card(
+        child: Column(
+          children: [
+            PageHeader(
+              padding: 0,
+              title: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text("IDGames Archive Browser"),
+                    ),
+                    flu.TextBox(
+                      style: TextStyle(fontSize: 16),
+                      placeholder: 'Search for pwads here...',
+                      onSubmitted: (text) async {
+                        if (text.length >= 5) {
+                          setState(() {
+                            query = text;
+                          });
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return ContentDialog(
+                                title: Text("Search error"),
+                                content: Text(
+                                    "You must at least input a search term major or equal to 5 chars to use the API"),
+                                actions: [
+                                  FilledButton(
+                                    child: Text("OK"),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      },
+                      /*  decoration: flu.TextInput(
+                        filled: true,
+                        fillColor: const Color(0xFFFFFFFF),
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        /* -- Text and Icon -- */
+                        hintText: "Search for pwads...",
+                        hintStyle: const TextStyle(
+                          fontSize: 18,
+                          color: Color(0xFFB3B1B1),
+                        ), // TextStyle
+                        suffixIcon: const Icon(
+                          mat.Icons.search,
+                          size: 26,
+                          color: mat.Colors.black54,
+                        ), // Icon
+                        /* -- Border Styling -- */
+                        border: mat.OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(45.0),
+                          borderSide: const BorderSide(
+                            width: 2.0,
+                            color: Color(0xFFFF0000),
+                          ), // BorderSide
+                        ), // mat.OutlineInputBorder
+                        enabledBorder: mat.OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(45.0),
+                          borderSide: const BorderSide(
+                            width: 2.0,
+                            color: mat.Colors.grey,
+                          ), // BorderSide
+                        ), // mat.OutlineInputBorder
+                        focusedBorder: mat.OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(45.0),
+                          borderSide: const BorderSide(
+                            width: 2.0,
+                            color: mat.Colors.grey,
+                          ), // BorderSide
+                        ), // mat.OutlineInputBorder
+                      ), // InputDecoration
+                    */
+                    ),
+                  ],
                 ),
               ),
             ),
-          ),
-          SingleChildScrollView(
-            child: FutureBuilder<Contents>(
+            Card(
+              child: CommandBar(
+                primaryItems: [
+                  CommandBarButton(
+                    icon: Icon(mat.Icons.open_in_browser),
+                    label: Text(
+                      "Open /idgames web frontend",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () {
+                      ShellExecute(
+                        NULL,
+                        TEXT('open'),
+                        TEXT("https://doomworld.com/idgames"),
+                        nullptr,
+                        nullptr,
+                        SW_SHOWNORMAL,
+                      );
+                    },
+                  ),
+                  CommandBarSeparator(),
+                  CommandBarButton(
+                    icon: Icon(mat.Icons.open_in_browser),
+                    label: Text(
+                      "Open Doomworld Forum",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () {
+                      ShellExecute(
+                        NULL,
+                        TEXT('open'),
+                        TEXT("https://doomworld.com/"),
+                        nullptr,
+                        nullptr,
+                        SW_SHOWNORMAL,
+                      );
+                    },
+                  ),
+                  CommandBarSeparator(),
+                  CommandBarButton(
+                    icon: Icon(mat.Icons.code),
+                    label: Text(
+                      "Open this app GitHub repo",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () {
+                      ShellExecute(
+                        NULL,
+                        TEXT('open'),
+                        TEXT(
+                            "https://github.com/cr0ma/idgames_archive_browser"),
+                        nullptr,
+                        nullptr,
+                        SW_SHOWNORMAL,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      content: Acrylic(
+        tint: Colors.black,
+        tintAlpha: 0.1,
+        blurAmount: 0.5,
+        child: ListView(
+          children: [
+            FutureBuilder<Contents>(
               builder: (context, AsyncSnapshot<Contents> snapshot) {
                 if (snapshot.hasData) {
                   Contents? data = snapshot.data;
@@ -340,10 +441,16 @@ class _SearchPageState extends State<SearchPage> {
                   );
                 } else if (snapshot.hasError) {
                   return Center(
-                    child: Expanded(
-                      child: Text(
-                        "No results",
-                        textScaleFactor: 2,
+                    child: Container(
+                      child: Expanded(
+                        child: Text(
+                          "No results",
+                          textScaleFactor: 2,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   );
@@ -352,8 +459,8 @@ class _SearchPageState extends State<SearchPage> {
               },
               future: ApiService().getListEntry(query),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
