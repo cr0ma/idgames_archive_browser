@@ -7,13 +7,12 @@ import 'package:flutter/material.dart' as mat;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:idgames_archive_browser/platform/windows_platform_commands.dart';
 
-import 'package:idgames_archive_browser/service/api.dart';
-import 'package:idgames_archive_browser/service/api_sync.dart';
-
+import 'package:idgames_archive_browser/service/api_util.dart';
 import 'package:idgames_archive_browser/model/archive_model.dart';
 
 import 'package:get_time_ago/get_time_ago.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:developer' as dev;
 
 class RandomEntryPage extends StatefulWidget {
   RandomEntryPage({Key? key}) : super(key: key);
@@ -30,17 +29,6 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
     prefs = SharedPreferences.getInstance();
   }
 
-  int random(min, max) {
-    return min + Random().nextInt(max - min);
-  }
-
-  Future<FileElement> _genEntryRandomId() {
-    setState(() {
-      ApiServiceUtil().getRandomEntryId();
-    });
-    return ApiService().getEntry(random(1, ApiServiceUtil().randomEntryId));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Acrylic(
@@ -50,8 +38,9 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
       child: Column(
         children: [
           FutureBuilder<FileElement>(
-              future: _genEntryRandomId(),
+              future: ApiServiceUtil().getRandomEntry(Random()),
               builder: (context, snapshot) {
+                dev.log(snapshot.data.toString());
                 if (snapshot.hasData) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -143,7 +132,7 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Text(
-                                        "Rating",
+                                        "Rating:",
                                       ),
                                     ),
                                   ),
@@ -253,6 +242,7 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                     ),
                   );
                 } else if (snapshot.hasError) {
+                  dev.log(snapshot.data.toString());
                   return Center(
                       child: Expanded(
                           child: Text(
@@ -278,7 +268,9 @@ class _RandomEntryPageState extends State<RandomEntryPage> {
                   ),
                 ),
                 onPressed: () {
-                  _genEntryRandomId();
+                  var rng = Random();
+                  ApiServiceUtil().getRandomEntry(rng);
+                  setState(() {});
                 },
               ),
             ),

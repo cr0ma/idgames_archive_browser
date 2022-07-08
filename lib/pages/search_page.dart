@@ -7,9 +7,9 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:fluent_ui/fluent_ui.dart' as flu;
 import 'package:flutter/material.dart' as mat;
 import 'package:get_time_ago/get_time_ago.dart';
-// import 'package:idgames_archive_browser/platform/preferences_platform.dart';
 
 import 'package:idgames_archive_browser/service/api.dart';
+import 'package:idgames_archive_browser/service/api_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:win32/win32.dart';
 
@@ -18,7 +18,6 @@ import 'package:idgames_archive_browser/model/archive_model.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../platform/windows_platform_commands.dart';
-import 'package:path/path.dart' as pat;
 
 import 'package:idgames_archive_browser/platform/windows_platform_commands.dart';
 
@@ -43,6 +42,8 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   String? idGamesMirrorPath;
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return flu.ScaffoldPage(
@@ -61,6 +62,17 @@ class _SearchPageState extends State<SearchPage> {
                       child: Text("IDGames Archive Browser"),
                     ),
                     flu.TextBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            25,
+                          ),
+                        ),
+                      ),
+                      suffix: Icon(
+                        mat.Icons.search,
+                        size: 26,
+                      ),
                       style: TextStyle(fontSize: 16),
                       placeholder: 'Search for pwads here...',
                       onSubmitted: (text) async {
@@ -172,8 +184,8 @@ class _SearchPageState extends State<SearchPage> {
             FutureBuilder<Contents>(
               builder: (context, AsyncSnapshot<Contents> snapshot) {
                 if (snapshot.hasData) {
-                  Contents? data = snapshot.data;
                   return ListView.builder(
+                    controller: _scrollController,
                     physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
@@ -272,7 +284,7 @@ class _SearchPageState extends State<SearchPage> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: Text(
-                                            "Rating",
+                                            "Rating:",
                                           ),
                                         ),
                                       ),
@@ -374,7 +386,6 @@ class _SearchPageState extends State<SearchPage> {
 
                                           var argsString =
                                               '${Uri.file(idGamesMirrorPath!, windows: true).toFilePath(windows: false).substring(1)}/${dir}${filename}';
-                                          log(argsString.toString());
                                           WindowsPlatformCommands().runDoom(
                                               sourcePortPath!,
                                               argsString.toString());
@@ -420,6 +431,41 @@ class _SearchPageState extends State<SearchPage> {
               future: ApiService().getListEntry(query),
             ),
           ],
+        ),
+      ),
+      bottomBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FutureBuilder<Contents>(
+          future: ApiService().getListEntry(query),
+          builder: ((context, snapshot) {
+            if (snapshot.hasData) {
+              return Text(
+                "Results: ${snapshot.data!.content.file.length}",
+              );
+            } else {
+              return FutureBuilder<String>(
+                future: ApiServiceUtil().pingIdGames(),
+                builder: ((context, snapshot) {
+                  log(snapshot.data.toString());
+                  if (snapshot.hasData) {
+                    if (snapshot.data == 'true') {
+                      return Text(
+                        "IDgames online.",
+                      );
+                    } else {
+                      return Text(
+                        "IDgames is offline.",
+                      );
+                    }
+                  } else if (snapshot.hasError) {
+                    return Text("There's something wrong with the API.");
+                  } else {
+                    return Container();
+                  }
+                }),
+              );
+            }
+          }),
         ),
       ),
     );
